@@ -19,6 +19,7 @@ cargo check                            # check/build code without generating exe
 cargo fmt                              # format source files in the project
 cargo clippy                           # check project with linter
 */
+use crate::exercises::guess_game;
 
 mod exercises;
 mod language_basics;
@@ -29,5 +30,6 @@ fn main() {
     // fibonacci::run();
     // money::run();
     // money_with_enums::run();
-    memory_management::run();
+    // memory_management::run();
+    guess_game::run();
 }
