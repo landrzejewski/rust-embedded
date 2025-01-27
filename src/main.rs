@@ -18,6 +18,9 @@ cargo check                            # check/build code without generating exe
 cargo fmt                              # format source files in the project
 cargo clean                            # clean project
 */
+
+mod language_basics;
+
 fn main() {
-    language_basics::run();
+    // language_basics::run();
 }
