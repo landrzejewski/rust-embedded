@@ -19,11 +19,12 @@ cargo check                            # check/build code without generating exe
 cargo fmt                              # format source files in the project
 cargo clippy                           # check project with linter
 */
-use crate::exercises::guess_game;
+use crate::exercises::tic_tac_toe;
 
 mod exercises;
 mod language_basics;
 mod memory_management;
+mod collections_generics_traits;
 
 fn main() {
     // language_basics::run();
@@ -31,5 +32,6 @@ fn main() {
     // money::run();
     // money_with_enums::run();
     // memory_management::run();
-    guess_game::run();
+    // guess_game::run();
+    tic_tac_toe::run();
 }
