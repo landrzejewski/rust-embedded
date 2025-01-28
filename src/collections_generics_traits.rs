@@ -82,10 +82,11 @@ fn generics_and_traits() {
     other_point.print_info();
 
     shape_factory(true).print_info();
+
     let circle_shape = shape_factory(false);
     circle_shape.print_info();
 
-    draw_shape(circle_shape.as_ref());
+    draw_shape(*circle_shape);
 
     let in_memory_repository = InMemoryRepository;
     let sql_repository = SqlRepository;
@@ -102,7 +103,7 @@ fn f64_to_string(value: f64) -> String {
 }
 
 //fn to_string<A>(value: A) -> String where A: Display + Debug {
-fn to_string<A: Display>(value: A) -> String {
+fn to_string<A: Display + Clone>(value: A) -> String {
     format!("{value}:{}", type_name::<A>())
 }
 
@@ -127,14 +128,6 @@ impl<A: Display> Point<A> {
     }
 }
 
-trait Show {
-    fn get_info(&self) -> String;
-
-    fn print_info(&self) {
-        println!("Info {}", self.get_info());
-    }
-}
-
 // impl<T: Display + Clone> Display for Point<T> {
 
 impl<T> Display for Point<T>
@@ -143,6 +136,15 @@ where
 {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
+
+trait Show {
+    fn get_info(&self) -> String;
+
+    fn print_info(&self) {
+        println!("Info {}", self.get_info());
     }
 }
 
