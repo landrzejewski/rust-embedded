@@ -19,7 +19,7 @@ cargo clippy                           # lint project
 */
 
 fn main() {
-    println!("Hello, world!");
+    structs();
 }
 
 #[allow(unused_assignments)]
@@ -298,7 +298,7 @@ fn control_flow() {
             println!("You lost! {val}");
             "Loose"
         }
-        _ => {
+        value => {
             // if you are not interested in the value you can use _
             println!("You hit {value}, try again");
             "Try again"
@@ -448,6 +448,7 @@ fn structs() {
         Point3d { x, .. } => println!("x is {}", x), // ignoring other elements of the structure
     }
 
+    Rectangle::new(10, 20);
     let rectangle = Rectangle { width: 100, height: 50 };
     println!("Rectangle area: {}", rectangle.area()); // == Rectangle::area(&rectangle);
 
@@ -520,6 +521,179 @@ impl Rectangle {
     }
 }
 
+/*
+Enums
+- represent the enumeration of fixed/possible variants
+- allow to define methods/behaviors (the same as for structures)
+*/
+#[allow(unused_variables)]
+fn enums() -> Result<(), String> {
+    let qr_code: Barcode = Barcode::Qr(String::from("345345345345"));
+    let product_code = Barcode::Product {
+        id: 5,
+        value: String::from("123"),
+    };
+
+    println!("{}", size_of_val(&qr_code));
+    println!("{}", size_of_val(&product_code));
+    println!("{}", size_of_val(&Barcode::Other));
+    // let a  = [qr_code, product_code, Barcode::Other];
+
+    // println!("Value: {}", Values::from_i32(17));
+
+    // destructuring of enumeration elements
+
+    match qr_code {
+        Barcode::Other => println!("Other barcode"),
+        Barcode::Product { value, id } => println!("Product {id}:{value} "),
+        Barcode::Qr(value) => println!("Qr {value} "),
+        _ => (),
+    }
+
+    match product_code {
+        Barcode::Product { id: id_value @ 4..=10, value: _ } => println!("Id in big range {id_value}"), // bind values in range
+        Barcode::Product { id: 1..=3, value: _ } => println!("Id in small range"),
+        _ => {}
+    }
+
+    /* one of the built-in enumeration types is Option representing a value or the absence of a value (alternative to null)
+
+    enum Option<T> {
+        None,
+        Some(T),
+    }
+    */
+
+    let _result = safe_div(3.0, 3.0);//.expect("Division by 0"); //.unwrap();
+
+    let val = safe_div(3.0, 3.0).unwrap_or(0.0);
+
+    match safe_div(3.0, 3.0) {
+        Some(value) => println!("3.0 / 3.0 = {}", value),
+        _ => (),
+    }
+
+    if let Some(value) = safe_div(3.0, 3.0) {
+        println!("3.0 / 3.0 = {}", value);
+    }
+
+    let Some(value) = safe_div(3.0, 3.0) else {
+        return Err("error".to_string());
+    };
+
+    println!("3.0 / 3.0 = {}", value);
+
+    let mut stack = vec![1, 2, 3];
+    while let Some(value) = stack.pop() {
+        println!("Value: {}", value);
+    }
+
+    /*
+     enum Result<T, E> {
+        Ok(T),
+        Err(E),
+     }
+    */
+
+    let _result = safe_div_with_result(3.0, 3.0)?; // in case of Err return/exit function
+
+    safe_div_with_result(3.0, 3.0).ok();
+
+    match safe_div_with_result(3.0, 3.0) {
+        Ok(value) => println!("3.0 / 3.0 = {}", value),
+        Err(message) => return Err(message),
+    }
+
+    // you can use unwrap_or() to extract Ok value from a Result, or use a fallback value if Err.
+    let parsed_value = i32::from_str_radix("FF", 16);
+    println!("Result: {}", parsed_value.unwrap_or(-1));
+
+    // Option -> Result
+
+    let some_option: Option<i32> = Some(42);
+    let none_option: Option<i32> = None;
+
+    let result_some: Result<i32, &str> = some_option.ok_or("Value was None");
+    let result_none: Result<i32, &str> = none_option.ok_or("Value was None");
+
+    let result_some: Result<i32, String> = some_option.ok_or_else(|| "Value was None".to_string());
+    let result_none: Result<i32, String> = none_option.ok_or_else(|| "Value was None".to_string());
+
+    println!("{:?}", result_some); // Output: Ok(42)
+    println!("{:?}", result_none); // Output: Err("Value was None")
+
+    // Result -> Option
+
+    let success: Result<i32, &str> = Ok(42);
+    let error: Result<i32, &str> = Err("Something went wrong");
+
+    let success_option: Option<i32> = success.ok();
+    let error_option: Option<i32> = error.ok();
+
+    println!("{:?}", success_option); // Output: Some(42)
+    println!("{:?}", error_option); // Output: None
+
+    let success_error: Option<&str> = success.err();
+    let error_error: Option<&str> = error.err();
+
+    println!("{:?}", success_error); // Output: None
+    println!("{:?}", error_error); // Output: Some("Something went wrong")
+
+    Ok(())
+}
+
+fn get_first_char(input: &str) -> Option<char> {
+    let string = input.chars().nth(0)?; // If `input` is `None`, this returns `None` immediately.
+    Some(string)
+}
+
+enum Currency {
+    #[allow(dead_code)]
+    Eur,
+    Pln,
+    Gbp,
+}
+
+enum Values {
+    A = 17,
+    B = 42,
+    C,
+}
+
+struct Money {
+    value: f64,
+    currency: Currency,
+}
+
+#[derive(Debug)]
+enum Barcode {
+    Other,
+    Qr(String),
+    Upc(i32, i32, i32, i32),
+    Product { value: String, id: i64 },
+}
+
+impl Barcode {
+    fn get_info(&self) -> String {
+        format!("Barcode {:?}", self)
+    }
+}
+
+fn safe_div(value: f64, dividend: f64) -> Option<f64> {
+    if dividend == 0.0 {
+        None
+    } else {
+        Some(value / dividend)
+    }
+}
+
+fn safe_div_with_result(value: f64, dividend: f64) -> Result<f64, String> {
+    if dividend == 0.0 {
+        Err("Division by 0".to_string())
+    } else {
+        Ok(value / dividend)
+    }
+}
 
 
 
