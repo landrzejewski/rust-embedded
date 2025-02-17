@@ -12,7 +12,8 @@ pub fn run() {
 fn collections() {
     // Vectors
 
-    let mut numbers = Vec::<i32>::new();
+    let mut numbers = Vec::new();
+
     //let mut numbers: Vec<i32> = Vec::new();
     numbers.push(1);
     numbers.push(2);
@@ -34,11 +35,15 @@ fn collections() {
     let letters_slice = &letters[0..1];
 
     // https://crates.io/crates/itertools
-    let modified_values: Vec<i32> = numbers.iter().map(|number| number * 2).filter(|number| number % 2 == 0).collect();
+    let modified_values: Vec<i32> = numbers
+        .iter()
+        .map(|number| number * 2)
+        .filter(|number| number % 2 == 0)
+        .collect();
 
     _ = numbers.iter_mut().map(|number| *number = *number * 2).collect::<Vec<_>>();
 
-    for number in &numbers {
+    for number in &mut numbers {
         println!("Number: {number}");
     }
 
@@ -81,7 +86,7 @@ fn generics_and_traits() {
     let circle_shape = shape_factory(false);
     circle_shape.print_info();
 
-    draw_shape(circle_shape.as_ref());
+    draw_shape(*circle_shape);
 
     let in_memory_repository = InMemoryRepository;
     let sql_repository = SqlRepository;
@@ -97,7 +102,8 @@ fn f64_to_string(value: f64) -> String {
     format!("{value}:f64")
 }
 
-//fn to_string<A>(value: A) -> String where A: Display + Debug {
+// fn to_string<A>(value: A) -> String
+//      where A: Display + Debug {
 fn to_string<A: Display>(value: A) -> String {
     format!("{value}:{}", type_name::<A>())
 }
@@ -106,6 +112,8 @@ struct Point<T> {
     x: T,
     y: T,
 }
+
+
 
 /*impl Point<f64> {
     fn show(&self) {
@@ -227,7 +235,8 @@ impl Debug for Coord {
 }
 */
 
-fn create_user(repository: &impl Repository) {
+// fn create_user(repository: &impl Repository) {
+fn create_user<A: Repository>(repository: &A) {
     repository.save();
 }
 
