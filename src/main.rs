@@ -21,10 +21,10 @@ cargo clippy                           # lint project
 */
 use crate::exercises::tictactoe::run;
 
+mod basic_io;
+mod collections_generics_traits;
 mod exercises;
 mod memory_management;
-mod collections_generics_traits;
-mod basic_io;
 
 fn main() {
     // language_basics::run();
