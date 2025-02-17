@@ -1,18 +1,21 @@
 #[derive(Clone, PartialEq, Debug)]
 enum Currency {
     Pln,
-    Eur
+    Eur,
 }
 
 #[derive(Debug)]
 struct Money {
     value: f64,
-    currency: Currency
+    currency: Currency,
 }
 
 impl Money {
     fn new(value: f64) -> Self {
-        Self { value, currency: Currency::Pln }
+        Self {
+            value,
+            currency: Currency::Pln,
+        }
     }
 
     fn add(&mut self, money: Money) -> Option<Money> {

@@ -1,7 +1,7 @@
 use std::rc::Rc;
 
 pub fn run() {
-     memory_management();
+    memory_management();
     //lifetimes();
     // pointers();
 }
@@ -210,11 +210,10 @@ fn lifetimes() {
     let last_name = String::from("Kowalski");
     let address = String::from("tests");
 
-    let client = Person {
-        first_name: "Jan",
-        last_name: &last_name
-    };
-
+    // let client = Person {
+    //     first_name: "Jan",
+    //     last_name: &last_name,
+    // };
 }
 
 /*
@@ -222,7 +221,6 @@ fn lifetimes() {
  - for methods with arguments, the compiler assigns different (consecutive) lifetime parameters to the arguments and result
  - for methods with arguments that contain &self or &mut self lifetime of the result is the same as for the attribute &self or &mut self
 */
-
 
 fn get_longer<'a>(text: &'a str, other_text: &'a str) -> &'a str {
     // in this case, the returned reference must be valid as long as the references of the passed arguments
@@ -296,5 +294,8 @@ struct Employee {
 
 fn use_employee(rc_emp: &Rc<Employee>) {
     let c = Rc::clone(&rc_emp);
-    println!("Reference count inside function is {}", Rc::strong_count(&c));
+    println!(
+        "Reference count inside function is {}",
+        Rc::strong_count(&c)
+    );
 }

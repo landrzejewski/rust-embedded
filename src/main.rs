@@ -19,20 +19,21 @@ cargo fmt                              # format source files in the project
 cargo clean                            # clean project
 cargo clippy                           # lint project
 */
-use crate::exercises::fibonacci;
-use crate::exercises::money::run;
+use crate::exercises::tictactoe::run;
 
 mod exercises;
 mod memory_management;
+mod collections_generics_traits;
+mod basic_io;
 
 fn main() {
     // language_basics::run();
     // fibonacci::run();
     // money::run();
     // money_with_enums::run();
-     memory_management::run();
+    // memory_management::run();
     // guess_game::run();
-    // tic_tac_toe::run()
+    run()
     // collections_generics_traits::run()
     // basic_io::run();
     // budget::run();
