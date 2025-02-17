@@ -23,15 +23,14 @@ use crate::exercises::fibonacci;
 use crate::exercises::money::run;
 
 mod exercises;
+mod memory_management;
 
 fn main() {
-    run();
-
     // language_basics::run();
     // fibonacci::run();
     // money::run();
     // money_with_enums::run();
-    // memory_management::run();
+     memory_management::run();
     // guess_game::run();
     // tic_tac_toe::run()
     // collections_generics_traits::run()

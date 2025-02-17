@@ -16,7 +16,7 @@ impl Money {
     }
 
     fn add(&mut self, money: Money) -> Option<Money> {
-        if (self.currency != money.currency) {
+        if self.currency != money.currency {
             return None;
         }
         let result = Money {
@@ -27,7 +27,7 @@ impl Money {
     }
 
     fn subtract(&self, money: Money) -> Option<Money> {
-        if (self.currency != money.currency) {
+        if self.currency != money.currency {
             return None;
         }
         let result = Money {
