@@ -11,3 +11,6 @@
 * Players take turns to occupy the vacant fields, placing their sign (circle or cross) on them
 * The game ends when all fields are occupied or one player occupies the winning sequence (column, row or diagonal)
 * The game interface should be based on the command line / terminal
+
+
+https://github.com/landrzejewski/rust-embedded
