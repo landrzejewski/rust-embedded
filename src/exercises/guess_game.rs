@@ -5,7 +5,7 @@ use std::io;
 
 pub fn run() {
     println!("Guess the number!");
-    let number = rand::rng().gen_range(1..=10);
+    let number = rand::rng().random_range(1..=10);
     loop {
         println!("Please input number: ");
         let mut provided_number = String::new();
