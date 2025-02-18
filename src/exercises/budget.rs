@@ -78,7 +78,7 @@ fn load() -> Vec<Operation> {
     let mut operations = Vec::new();
     for line in reader.lines() {
         let text = line.expect("Could not read line");
-        let operation =  Operation::try_from(text).expect("Invalid input");
+        let operation = Operation::try_from(text).expect("Invalid input");
         operations.push(operation);
     }
     operations

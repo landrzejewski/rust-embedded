@@ -19,8 +19,7 @@ cargo fmt                              # format source files in the project
 cargo clean                            # clean project
 cargo clippy                           # lint project
 */
-use crate::exercises::budget;
-use crate::exercises::tictactoe::run;
+use crate::exercises::weather::run;
 
 mod basic_io;
 mod collections_generics_traits;
@@ -28,6 +27,7 @@ mod exercises;
 mod memory_management;
 
 fn main() {
+    run();
     // language_basics::run();
     // fibonacci::run();
     // money::run();
@@ -36,7 +36,7 @@ fn main() {
     // guess_game::run();
     // collections_generics_traits::run()
     // basic_io::run();
-     budget::run();
+    // budget::run();
     // echo::run();
     // cat::run();
     // wc::run();
