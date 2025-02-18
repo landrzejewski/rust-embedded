@@ -89,7 +89,7 @@ fn generics_and_traits() {
     let circle_shape = shape_factory(false);
     circle_shape.print_info();
 
-    draw_shape(*circle_shape);
+    draw_shape(circle_shape.as_ref());
 
     let in_memory_repository = InMemoryRepository;
     let sql_repository = SqlRepository;
