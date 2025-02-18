@@ -1,6 +1,6 @@
 use std::env;
 use std::fmt::{write, Display, Formatter};
-use std::fs::File;
+use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader};
 
 const DEPOSIT: &str = "Deposit";
@@ -83,12 +83,24 @@ fn load() -> Vec<Operation> {
     operations
 }
 
+fn save(operations: &Vec<Operation>) {
+    let file = OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .append(false)
+        .open(FILE_NAME)
+        .expect("Could not open file");
+    operations.iter()
+        .for_each(|operation| writeln!(file, "{}", operation)
+        .expect("Could not write to file"));
+}
+
 fn get_args() -> Vec<String> {
     env::args().skip(1).collect()
 }
 
 fn run() {
     let ot = OperationType::try_from("Deposit");
-
     let o: Result<OperationType, String> = "Deposit".try_into();
 }
