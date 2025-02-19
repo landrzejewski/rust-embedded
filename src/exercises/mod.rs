@@ -6,3 +6,4 @@ pub mod tictactoe;
 pub mod weather;
 pub mod echo;
 pub mod cat;
+pub mod wc;

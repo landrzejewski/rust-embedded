@@ -19,7 +19,7 @@ cargo fmt                              # format source files in the project
 cargo clean                            # clean project
 cargo clippy                           # lint project
 */
-use crate::exercises::cat::run;
+use crate::exercises::wc::run;
 
 mod basic_io;
 mod collections_generics_traits;
